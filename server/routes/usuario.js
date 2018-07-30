@@ -1,12 +1,13 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
-
+const { VerificaToken, VerificaAdmin_Role } = require('../moddlewares/autenticacion');
 const app = express();
 
 
-app.get('/usuario', function(req, res) {
+app.get('/usuario', VerificaToken, (req, res) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -38,7 +39,7 @@ app.get('/usuario', function(req, res) {
 
 });
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [VerificaToken, VerificaAdmin_Role], function(req, res) {
 
     let body = req.body;
 
@@ -67,7 +68,7 @@ app.post('/usuario', function(req, res) {
 
 });
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [VerificaToken, VerificaAdmin_Role], function(req, res) {
 
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
@@ -93,7 +94,7 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [VerificaToken, VerificaAdmin_Role], function(req, res) {
 
     let id = req.params.id;
 
