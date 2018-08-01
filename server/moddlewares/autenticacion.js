@@ -29,7 +29,7 @@ module.exports.VerificaAdmin_Role = (req, res, next) => {
     console.log(usuario.role);
     if (usuario.role !== 'ADMIN_ROLE') {
         return res.json({
-            ok: true,
+            ok: false,
             err: {
                 message: 'El usuario no es administrador'
             }
