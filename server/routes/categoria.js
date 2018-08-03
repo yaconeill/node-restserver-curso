@@ -2,7 +2,7 @@ const express = require('express');
 const {
     VerificaToken,
     VerificaAdmin_Role
-} = require('../moddlewares/autenticacion');
+} = require('../middlewares/autenticacion');
 
 const app = express();
 
@@ -23,7 +23,7 @@ app.get('/categoria', VerificaToken, (req, res) => {
                 });
             }
 
-            Categoria.count({}, (err, conteo) => {
+            Categoria.countDocuments({}, (err, conteo) => {
                 res.json({
                     ok: true,
                     categoria,

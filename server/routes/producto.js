@@ -1,7 +1,7 @@
 const express = require('express');
 const {
     VerificaToken
-} = require('../moddlewares/autenticacion');
+} = require('../middlewares/autenticacion');
 
 const _ = require('underscore');
 const app = express();

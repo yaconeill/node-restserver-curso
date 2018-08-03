@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const _ = require('underscore');
 const Usuario = require('../models/usuario');
-const { VerificaToken, VerificaAdmin_Role } = require('../moddlewares/autenticacion');
+const { VerificaToken, VerificaAdmin_Role } = require('../middlewares/autenticacion');
 const app = express();
 
 
@@ -26,7 +26,7 @@ app.get('/usuario', VerificaToken, (req, res) => {
                 });
             }
 
-            Usuario.count({ estado: true }, (err, conteo) => {
+            Usuario.countDocuments({ estado: true }, (err, conteo) => {
 
                 res.json({
                     ok: true,

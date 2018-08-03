@@ -23,7 +23,6 @@ module.exports.VerificaToken = (req, res, next) => {
 //  ====================
 //  Verificar AdminRole
 //  ====================
-
 module.exports.VerificaAdmin_Role = (req, res, next) => {
     let usuario = req.usuario;
     console.log(usuario.role);
@@ -36,4 +35,25 @@ module.exports.VerificaAdmin_Role = (req, res, next) => {
         });
     }
     next();
+};
+
+//  ====================
+//  Verificar token img
+//  ====================
+module.exports.VerificaTokenImg = (req, res, next) => {
+    let token = req.query.token;
+
+    jwt.verify(token, process.env.SEED, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err: {
+                    message: 'Token no válido'
+                }
+            });
+        }
+
+        req.usuario = decoded.usuario;
+        next();
+    });
 };
